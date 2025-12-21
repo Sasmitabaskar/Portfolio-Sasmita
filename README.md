@@ -1,13 +1,13 @@
 
 ---
 
-## Project Overview
+## Project Overview - https://sasmitabaskar.pages.dev/
 
-A modern, responsive portfolio built to highlight my professional profile, projects, and technical expertise. The application focuses on clean UI, performance, and accessibility.
+A modern, responsive portfolio built to highlight my professional profile, projects, and technical expertise.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 This project is built using:
 
