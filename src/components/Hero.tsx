@@ -80,7 +80,7 @@ const Hero = () => {
 
               {/* Description */}
               <p className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-              Software developer passionate about building scalable, reliable applications. I enjoy solving complex problems, exploring new technologies, and writing clean, maintainable code that delivers real value from idea to deployment.
+              Passionate about building software that lasts, performs, and makes a difference - through thoughtful code and collaborative problem - solving.
               </p>
 
               {/* CTA Buttons */}

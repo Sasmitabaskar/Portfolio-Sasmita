@@ -6,7 +6,7 @@ const Skills = () => {
     },
     {
       title: "Web Languages",
-      skills: ["AdonisJS", "Node.js", "HTML", "Cascading Style Sheets", "JavaScript"],
+      skills: ["AdonisJS", "Node.js", "Express.js", "HTML", "Cascading Style Sheets", "JavaScript"],
     },
     {
       title: "Databases",
@@ -14,7 +14,7 @@ const Skills = () => {
     },
     {
       title: "Tools & Others",
-      skills: ["Git", "Docker", "CI/CD", "Google Cloud Platform"],
+      skills: ["Git", "Docker", "CI/CD", "Google Cloud Run", "Google Cloud Build", "Cloud Build Triggers", "API Gateway",  "OpenAI APIs", "JavaScript Libraries", "Scalable Vector Graphics (SVG)", "JavaScript Libraries", "Object-Oriented Programming", "Software Engineering Principles", "Database Management Systems (DBMS)" ],
     },
   ];
 
