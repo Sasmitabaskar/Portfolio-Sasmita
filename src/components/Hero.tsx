@@ -228,7 +228,7 @@ const Hero = () => {
                   asChild
                   className="text-white hover:text-white hover:bg-primary/20"
                 >
-                  <a href="/resume.pdf" download>
+                  <a href="/Sasmita_Baskar_Resume.pdf" download>
                     <Download className="w-4 h-4 mr-2" />
                     Resume
                   </a>
