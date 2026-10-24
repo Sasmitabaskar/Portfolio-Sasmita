@@ -1,7 +1,38 @@
-import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react";
+import { useState } from "react";
+import { Briefcase, GraduationCap, MapPin, Calendar, ChevronDown } from "lucide-react";
+
+/* Skill chips: shows the first few, expands on click */
+const SkillChips = ({ skills, limit = 6 }: { skills: string[]; limit?: number }) => {
+  const [open, setOpen] = useState(false);
+  const visible = open ? skills : skills.slice(0, limit);
+  const hidden = skills.length - limit;
+
+  return (
+    <div className="mt-4 flex flex-wrap gap-2">
+      {visible.map((skill) => (
+        <span
+          key={skill}
+          className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/10 hover:text-primary"
+        >
+          {skill}
+        </span>
+      ))}
+      {hidden > 0 && (
+        <button
+          onClick={() => setOpen(!open)}
+          className="inline-flex items-center gap-1 rounded-full border border-dashed border-primary/40 px-3 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
+        >
+          {open ? "Show less" : `+${hidden} more`}
+          <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        </button>
+      )}
+    </div>
+  );
+};
 
 const Experience = () => {
-  const workExperience = [
+  // ⬇️ Keep your existing workExperience array here (unchanged)
+   const workExperience = [
     {
       company: "NGP Websmart Pvt.Ltd.",
       location: "Chennai, Tamil Nadu, India · On-site",
@@ -91,122 +122,136 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
+    <section id="experience" className="relative overflow-hidden bg-background py-24">
+      {/* Soft background glow */}
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
+
+      <div className="container relative mx-auto px-6">
+        <div className="mx-auto max-w-4xl">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <p className="text-primary font-mono text-sm mb-2">My journey</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Experience</h2>
+          <div className="mb-16 text-center">
+            <p className="mb-2 font-mono text-sm text-primary">My journey</p>
+            <h2 className="text-3xl font-bold text-foreground md:text-4xl">Experience</h2>
+            <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-primary" />
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Work Experience */}
-            <div>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 rounded-xl bg-gradient-card border border-border">
-                  <Briefcase className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl font-semibold text-foreground">Work Experience</h3>
-              </div>
+          {/* ================= WORK EXPERIENCE ================= */}
+          <div className="mb-8 flex items-center gap-3">
+            <div className="rounded-xl border border-primary/30 bg-primary/10 p-3">
+              <Briefcase className="h-6 w-6 text-primary" />
+            </div>
+            <h3 className="text-2xl font-semibold text-foreground">Work Experience</h3>
+          </div>
 
-              <div className="space-y-6">
-                {workExperience.map((job, index) => (
-                  <div
-                    key={job.company}
-                    className="relative pl-8 before:absolute before:left-[11px] before:top-8 before:bottom-0 before:w-[2px] before:bg-border last:before:hidden"
-                  >
-                    {/* Timeline dot */}
-                    <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-gradient-card border-2 border-primary flex items-center justify-center">
-                      <div className="w-2 h-2 rounded-full bg-primary" />
+          <div className="relative mb-20 pl-10 md:pl-14">
+            {/* Glowing vertical line */}
+            <div className="absolute bottom-0 left-[15px] top-0 w-px bg-gradient-to-b from-primary via-primary/30 to-transparent md:left-[19px]" />
+
+            <div className="space-y-10">
+              {workExperience.map((job, index) => (
+                <div
+                  key={job.company}
+                  className="group relative animate-fade-up"
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  {/* Timeline node */}
+                  <div className="absolute -left-10 top-6 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-background transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow md:-left-14 md:h-10 md:w-10">
+                    <Briefcase className="h-4 w-4 text-primary" />
+                  </div>
+
+                  {/* Company card */}
+                  <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow md:p-8">
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary/40 to-transparent" />
+
+                    <h4 className="text-xl font-semibold text-foreground">{job.company}</h4>
+                    <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <span>{job.location}</span>
                     </div>
 
-                    <div className="bg-gradient-card rounded-xl border border-border p-6 hover:border-primary/30 transition-all duration-300 hover:shadow-glow">
-                      <h4 className="text-lg font-semibold text-foreground mb-1">{job.company}</h4>
-                      <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
-                        <MapPin className="w-4 h-4" />
-                        <span>{job.location}</span>
-                      </div>
+                    {/* Roles */}
+                    <div className="relative mt-6 space-y-6 border-l border-primary/20 pl-6">
+                      {job.roles.map((role, roleIndex) => {
+                        const isCurrent = role.duration.includes("Present");
+                        return (
+                          <div key={roleIndex} className="relative">
+                            {/* Role dot */}
+                            <span className="absolute -left-[31px] top-1.5 flex h-3 w-3">
+                              {isCurrent && (
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                              )}
+                              <span className="relative inline-flex h-3 w-3 rounded-full border-2 border-background bg-primary" />
+                            </span>
 
-                      <div className="space-y-4">
-                        {job.roles.map((role, roleIndex) => (
-                          <div
-                            key={roleIndex}
-                            className="border-l-2 border-primary/30 pl-4 py-2"
-                          >
-                            <div className="flex items-start justify-between gap-2 flex-wrap">
-                              <div>
-                                <h5 className="font-medium text-foreground">{role.title}</h5>
-                                <span className="text-sm text-primary">{role.type}</span>
-                              </div>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <h5 className="text-lg font-medium text-foreground">{role.title}</h5>
+                              <span className="rounded-full border border-primary/40 px-2.5 py-0.5 text-xs text-primary">
+                                {role.type}
+                              </span>
+                              {isCurrent && (
+                                <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">
+                                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+                                  Current
+                                </span>
+                              )}
                             </div>
-                            <div className="flex items-center gap-2 text-muted-foreground text-sm mt-1">
-                              <Calendar className="w-4 h-4" />
+
+                            <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                              <Calendar className="h-4 w-4" />
                               <span>{role.duration}</span>
                             </div>
+
                             {role.description && (
-                              <p className="text-muted-foreground text-sm mt-3 leading-relaxed">
+                              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                                 {role.description}
                               </p>
                             )}
-                            <div className="flex flex-wrap gap-2 mt-3">
-                              {role.skills.map((skill) => (
-                                <span
-                                  key={skill}
-                                  className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium"
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
+
+                            <SkillChips skills={role.skills} />
                           </div>
-                        ))}
-                      </div>
+                        );
+                      })}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Education */}
-            <div>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 rounded-xl bg-gradient-card border border-border">
-                  <GraduationCap className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-2xl font-semibold text-foreground">Education</h3>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <div className="space-y-6">
-                {education.map((edu) => (
-                  <div key={edu.institution} className="relative pl-8">
-                    {/* Timeline dot */}
-                    <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-gradient-card border-2 border-primary flex items-center justify-center">
-                      <div className="w-2 h-2 rounded-full bg-primary" />
-                    </div>
+          {/* ================= EDUCATION ================= */}
+          <div className="mb-8 flex items-center gap-3">
+            <div className="rounded-xl border border-primary/30 bg-primary/10 p-3">
+              <GraduationCap className="h-6 w-6 text-primary" />
+            </div>
+            <h3 className="text-2xl font-semibold text-foreground">Education</h3>
+          </div>
 
-                    <div className="bg-gradient-card rounded-xl border border-border p-6 hover:border-primary/30 transition-all duration-300 hover:shadow-glow">
-                      <h4 className="text-lg font-semibold text-foreground mb-1">{edu.institution}</h4>
-                      <p className="text-primary font-medium mb-2">{edu.degree}</p>
-                      <div className="flex items-center gap-2 text-muted-foreground text-sm mb-3">
-                        <Calendar className="w-4 h-4" />
-                        <span>{edu.duration}</span>
-                      </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{edu.description}</p>
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        {edu.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+          <div className="relative pl-10 md:pl-14">
+            <div className="absolute bottom-0 left-[15px] top-0 w-px bg-gradient-to-b from-primary via-primary/30 to-transparent md:left-[19px]" />
+
+            <div className="space-y-10">
+              {education.map((edu) => (
+                <div key={edu.institution} className="group relative animate-fade-up">
+                  <div className="absolute -left-10 top-6 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-background transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow md:-left-14 md:h-10 md:w-10">
+                    <GraduationCap className="h-4 w-4 text-primary" />
                   </div>
-                ))}
-              </div>
+
+                  <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow md:p-8">
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary/40 to-transparent" />
+
+                    <h4 className="text-xl font-semibold text-foreground">{edu.institution}</h4>
+                    <p className="mt-1 font-medium text-primary">{edu.degree}</p>
+                    <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      <span>{edu.duration}</span>
+                    </div>
+
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{edu.description}</p>
+
+                    <SkillChips skills={edu.skills} limit={5} />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
