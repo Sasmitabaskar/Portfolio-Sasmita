@@ -54,88 +54,90 @@ const Header = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "border-b border-border bg-background/70 py-0 shadow-lg shadow-black/20 backdrop-blur-xl"
-          : "bg-transparent py-2"
-      }`}
-    >
-      {/* Scroll progress bar */}
-      <div
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-fuchsia-400 to-primary shadow-glow transition-[width] duration-150"
-        style={{ width: `${progress}%`, opacity: isScrolled ? 1 : 0 }}
-      />
+    <>
+      <header
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "border-b border-border bg-background/70 py-0 shadow-lg shadow-black/20 backdrop-blur-xl"
+            : "bg-transparent py-2"
+        }`}
+      >
+        {/* Scroll progress bar */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-fuchsia-400 to-primary shadow-glow transition-[width] duration-150"
+          style={{ width: `${progress}%`, opacity: isScrolled ? 1 : 0 }}
+        />
 
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="group flex items-center gap-3" aria-label="Back to top">
-            <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-fuchsia-500 font-mono text-sm font-bold text-white shadow-glow transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
-              SB
-            </span>
-            <span className="hidden sm:block">
-              <span className="block text-lg font-bold leading-tight text-foreground">
-                Sasmita <span className="text-gradient">Baskar</span>
+        <nav className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <a href="#" className="group flex items-center gap-3" aria-label="Back to top">
+              <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-fuchsia-500 font-mono text-sm font-bold text-white shadow-glow transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
+                SB
               </span>
-              <span className="block font-mono text-[10px] leading-tight text-muted-foreground">
-                Code with Purpose, Build with Vision
+              <span className="hidden sm:block">
+                <span className="block text-lg font-bold leading-tight text-foreground">
+                  Sasmita <span className="text-gradient">Baskar</span>
+                </span>
+                <span className="block font-mono text-[10px] leading-tight text-muted-foreground">
+                  Code with Purpose, Build with Vision
+                </span>
               </span>
-            </span>
-          </a>
+            </a>
 
-          {/* Desktop Navigation: pill container */}
-          <div className="hidden items-center gap-1 rounded-full border border-border bg-card/60 p-1.5 backdrop-blur-md md:flex">
-            {navItems.map((item) => {
-              const isActive = activeId === item.id;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                    isActive
-                      ? "bg-primary text-primary-foreground shadow-glow"
-                      : "text-muted-foreground hover:bg-primary/10 hover:text-foreground"
-                  }`}
-                >
-                  {item.label}
+            {/* Desktop Navigation: pill container */}
+            <div className="hidden items-center gap-1 rounded-full border border-border bg-card/60 p-1.5 backdrop-blur-md md:flex">
+              {navItems.map((item) => {
+                const isActive = activeId === item.id;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                      isActive
+                        ? "bg-primary text-primary-foreground shadow-glow"
+                        : "text-muted-foreground hover:bg-primary/10 hover:text-foreground"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Right side: CTA + mobile button */}
+            <div className="flex items-center gap-3">
+              <Button variant="hero" size="sm" asChild className="group/btn hidden lg:inline-flex">
+                <a href="#contact">
+                  Let's Talk
+                  <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
                 </a>
-              );
-            })}
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full border border-white/30 text-white hover:bg-primary/20 hover:text-white md:hidden"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                {isMobileMenuOpen ? <X /> : <Menu />}
+              </Button>
+            </div>
           </div>
+        </nav>
+      </header>
 
-          {/* Right side: CTA + mobile button */}
-          <div className="flex items-center gap-3">
-            <Button variant="hero" size="sm" asChild className="group/btn hidden lg:inline-flex">
-              <a href="#contact">
-                Let's Talk
-                <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
-              </a>
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full border border-white/30 text-white hover:bg-primary/20 hover:text-white md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? <X /> : <Menu />}
-            </Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile full-screen menu */}
+      {/* Mobile full-screen menu (OUTSIDE the header so backdrop-blur doesn't trap it) */}
       <div
-        className={`fixed inset-0 top-[73px] z-40 bg-background/95 backdrop-blur-xl transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-background/95 pt-24 backdrop-blur-xl transition-all duration-500 md:hidden ${
           isMobileMenuOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
         <div className="pointer-events-none absolute left-1/2 top-1/4 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
 
-        <div className="relative flex h-full flex-col justify-between p-8 pb-24">
+        <div className="relative flex h-full flex-col justify-between p-8 pb-28">
           <div className="space-y-2">
             {navItems.map((item, index) => {
               const isActive = activeId === item.id;
@@ -164,14 +166,14 @@ const Header = () => {
           </div>
 
           <Button variant="hero" size="lg" asChild className="w-full">
-            <a href="/resume.pdf" download>
+            <a href="/Sasmita_Baskar_Resume.pdf" download>
               <Download className="mr-2 h-5 w-5" />
               Download Resume
             </a>
           </Button>
         </div>
       </div>
-    </header>
+    </>
   );
 };
 
