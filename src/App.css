@@ -1,3 +1,11 @@
+:root {
+  --accent: #14b8a6;        /* teal */
+  --accent-glow: #14b8a6aa;
+  --accent-alt: #8b5cf6;    /* violet */
+  --accent-alt-glow: #8b5cf6aa;
+  --muted-text: #94a3b8;    /* soft slate */
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -12,10 +20,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em var(--accent-glow));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em var(--accent-alt-glow));
 }
 
 @keyframes logo-spin {
@@ -35,8 +43,10 @@
 
 .card {
   padding: 2em;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--muted-text);
 }
